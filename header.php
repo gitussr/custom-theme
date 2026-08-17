@@ -64,4 +64,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 		);
 		?>
 	</nav>
+
+	<?php
+	/**
+	 * Generic header extension point - not WooCommerce-specific. The
+	 * optional WooCommerce module hooks its Mini Cart trigger in here when
+	 * active; with the module off (or WooCommerce absent) this fires with
+	 * no listeners and outputs nothing.
+	 */
+	do_action( 'custom_theme_header_actions' );
+	?>
 </header>

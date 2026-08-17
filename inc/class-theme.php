@@ -67,10 +67,17 @@ class Theme {
 	 * Basic WooCommerce compatibility declarations.
 	 *
 	 * Only runs if WooCommerce is active, and adds nothing when it isn't -
-	 * the theme stays lightweight on non-WooCommerce sites.
+	 * the theme stays lightweight on non-WooCommerce sites. This baseline
+	 * compatibility is intentionally NOT gated by the optional WooCommerce
+	 * module switch (CustomTheme\Config::is_enabled('woocommerce')) - it
+	 * must keep working even when that module is switched off, since
+	 * declaring 'woocommerce' theme support changes how WooCommerce renders
+	 * its pages (see woocommerce_wrapper_start()/_end() below). The
+	 * enhanced product/cart/filter layer lives in inc/woocommerce/ and is
+	 * what the module switch actually controls.
 	 *
 	 * If a project never needs WooCommerce, this method can be safely deleted
-	 * (see README.md, section "WooCommerce").
+	 * (see README.md, section "WooCommerce Module").
 	 */
 	public function woocommerce_support(): void {
 		if ( ! class_exists( '\WooCommerce' ) ) {
@@ -81,5 +88,20 @@ class Theme {
 		add_theme_support( 'wc-product-gallery-zoom' );
 		add_theme_support( 'wc-product-gallery-lightbox' );
 		add_theme_support( 'wc-product-gallery-slider' );
+
+		// Declaring 'woocommerce' theme support tells WooCommerce to skip its
+		// own default page wrapper and defer to the theme instead. Without
+		// these two hooks, WooCommerce pages would render with no <main>
+		// wrapper at all.
+		add_action( 'woocommerce_before_main_content', [ $this, 'woocommerce_wrapper_start' ] );
+		add_action( 'woocommerce_after_main_content', [ $this, 'woocommerce_wrapper_end' ] );
+	}
+
+	public function woocommerce_wrapper_start(): void {
+		echo '<main id="primary" class="site-main">';
+	}
+
+	public function woocommerce_wrapper_end(): void {
+		echo '</main>';
 	}
 }

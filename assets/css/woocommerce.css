@@ -1,0 +1,300 @@
+/*
+ * Custom Theme - WooCommerce module stylesheet
+ * Loaded only on shop/product/cart/checkout/account pages
+ * (see inc/woocommerce/class-woocommerce.php), with filemtime() cache
+ * busting shared with the core theme's asset system. Only styles the
+ * components this module actually adds or touches - the rest of
+ * WooCommerce's markup is left to its own default styling.
+ */
+
+/* -----------------------------------------------------------------------
+ * Product grid / card
+ * -------------------------------------------------------------------- */
+
+ul.products {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	gap: 2rem;
+	list-style: none;
+	margin: 0 0 2rem;
+	padding: 0;
+}
+
+ul.products li.product {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+}
+
+ul.products li.product img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+}
+
+ul.products li.product .onsale {
+	position: absolute;
+	top: 0.5rem;
+	left: 0.5rem;
+	background: var(--color-primary);
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 600;
+	padding: 0.25em 0.6em;
+	border-radius: 4px;
+}
+
+ul.products li.product .woocommerce-loop-product__title {
+	font-size: 1rem;
+	margin: 0.75em 0 0.25em;
+}
+
+ul.products li.product .price {
+	color: var(--color-muted);
+}
+
+ul.products li.product .star-rating {
+	font-size: 0.85rem;
+}
+
+ul.products li.product .button {
+	margin-top: 0.75em;
+}
+
+.quick-view-button {
+	margin-top: 0.5em;
+	background: none;
+	border: 1px solid var(--color-border);
+	border-radius: 4px;
+	padding: 0.5em 0.9em;
+	font: inherit;
+	font-size: 0.85rem;
+	cursor: pointer;
+}
+
+/* -----------------------------------------------------------------------
+ * Quick View modal
+ * -------------------------------------------------------------------- */
+
+.quick-view-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 1000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+}
+
+.quick-view-modal[hidden] {
+	display: none;
+}
+
+.quick-view-backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(26, 26, 26, 0.6);
+}
+
+.quick-view-dialog {
+	position: relative;
+	background: var(--color-background);
+	max-width: 40rem;
+	width: 100%;
+	max-height: 90vh;
+	overflow-y: auto;
+	padding: 2rem;
+	border-radius: 8px;
+}
+
+.quick-view-close {
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	background: none;
+	border: 1px solid var(--color-border);
+	border-radius: 4px;
+	padding: 0.4em 0.8em;
+	cursor: pointer;
+	font: inherit;
+}
+
+.quick-view-content {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1.5rem;
+}
+
+@media (min-width: 40em) {
+	.quick-view-content {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+.quick-view-image img {
+	width: 100%;
+	height: auto;
+	border-radius: 4px;
+}
+
+.quick-view-title {
+	margin-top: 0;
+}
+
+.quick-view-add-to-cart {
+	margin-top: 1em;
+	padding: 0.6em 1.25em;
+	border: 1px solid var(--color-primary);
+	border-radius: 4px;
+	background: var(--color-primary);
+	color: #fff;
+	font: inherit;
+	cursor: pointer;
+}
+
+.quick-view-add-to-cart.is-loading,
+.ajax-add-to-cart.is-loading {
+	opacity: 0.6;
+	cursor: progress;
+}
+
+/* -----------------------------------------------------------------------
+ * Mini Cart
+ * -------------------------------------------------------------------- */
+
+.mini-cart {
+	position: relative;
+}
+
+.mini-cart-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4em;
+	background: none;
+	border: 1px solid var(--color-border);
+	border-radius: 4px;
+	padding: 0.5em 0.9em;
+	font: inherit;
+	cursor: pointer;
+}
+
+.cart-count {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 1.4em;
+	height: 1.4em;
+	border-radius: 999px;
+	background: var(--color-primary);
+	color: #fff;
+	font-size: 0.75rem;
+	padding-inline: 0.3em;
+}
+
+.mini-cart-panel {
+	position: absolute;
+	right: 0;
+	top: calc(100% + 0.5rem);
+	z-index: 900;
+	width: 20rem;
+	max-width: 90vw;
+	background: var(--color-background);
+	border: 1px solid var(--color-border);
+	border-radius: 8px;
+	padding: 1rem;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.mini-cart-panel[hidden] {
+	display: none;
+}
+
+/* -----------------------------------------------------------------------
+ * Shop filters
+ * -------------------------------------------------------------------- */
+
+.shop-filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1.5rem;
+	align-items: flex-start;
+	margin-bottom: 2rem;
+	padding-bottom: 1.5rem;
+	border-bottom: 1px solid var(--color-border);
+}
+
+.shop-filter {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	min-width: 8rem;
+}
+
+.shop-filter legend {
+	font-weight: 600;
+	font-size: 0.85rem;
+	margin-bottom: 0.4em;
+	padding: 0;
+}
+
+.shop-filter label {
+	display: block;
+	font-size: 0.9rem;
+	margin-bottom: 0.25em;
+}
+
+.shop-filter-price input[type="number"] {
+	width: 5rem;
+	padding: 0.3em 0.5em;
+	border: 1px solid var(--color-border);
+	border-radius: 4px;
+}
+
+.shop-filter-apply,
+.shop-filter-clear {
+	align-self: flex-end;
+}
+
+.shop-filter-apply {
+	padding: 0.5em 1em;
+	border: 1px solid var(--color-primary);
+	border-radius: 4px;
+	background: var(--color-primary);
+	color: #fff;
+	font: inherit;
+	cursor: pointer;
+}
+
+.shop-filter-clear {
+	font-size: 0.9rem;
+}
+
+ul.products[aria-busy="true"] {
+	opacity: 0.5;
+}
+
+/* -----------------------------------------------------------------------
+ * AJAX status notice
+ * -------------------------------------------------------------------- */
+
+.custom-theme-notice {
+	position: fixed;
+	left: 50%;
+	bottom: 1.5rem;
+	transform: translate(-50%, 1rem);
+	background: var(--color-text);
+	color: var(--color-background);
+	padding: 0.75em 1.25em;
+	border-radius: 6px;
+	font-size: 0.9rem;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
+	z-index: 1100;
+}
+
+.custom-theme-notice.is-visible {
+	opacity: 1;
+	transform: translate(-50%, 0);
+}
