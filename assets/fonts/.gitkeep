@@ -1,0 +1,4 @@
+Place local .woff2 font files in this directory and declare them with
+@font-face in assets/css/main.css. See the comment block at the top of
+that file for an example. No fonts are bundled by default; the theme
+uses the system font stack until you add your own.
