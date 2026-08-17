@@ -34,7 +34,7 @@ class Assets {
 			$handle,
 			get_template_directory_uri() . $relative_path,
 			[],
-			$this->get_asset_version( $relative_path )
+			self::get_version( $relative_path )
 		);
 	}
 
@@ -43,7 +43,7 @@ class Assets {
 			$handle,
 			get_template_directory_uri() . $relative_path,
 			[],
-			$this->get_asset_version( $relative_path ),
+			self::get_version( $relative_path ),
 			[
 				'strategy'  => 'defer',
 				'in_footer' => true,
@@ -55,8 +55,13 @@ class Assets {
 	 * Uses the file's last modified time as the version string, so the
 	 * browser cache is automatically invalidated whenever a CSS/JS file
 	 * changes. Falls back to the theme version if the file is missing.
+	 *
+	 * Public/static so other asset-loading code (e.g. the optional
+	 * WooCommerce module) reuses this exact mechanism instead of
+	 * duplicating it. $relative_path is theme-root-relative, e.g.
+	 * '/assets/css/main.css'.
 	 */
-	private function get_asset_version( string $relative_path ): string {
+	public static function get_version( string $relative_path ): string {
 		$file_path = get_template_directory() . $relative_path;
 
 		return file_exists( $file_path )
